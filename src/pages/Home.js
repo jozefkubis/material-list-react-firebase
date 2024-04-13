@@ -22,10 +22,14 @@ const Home = () => {
     setSearchTerm(e.target.value)
   }
 
+  const filteredData = data.filter((oneItem) =>
+    oneItem.item.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+
   return (
     <section className="home-section">
       <div className="home-div">
-        <h1>Zoznam materialu v RZP posadke</h1>
+        <h1>Zoznam materialu v posadke RZP</h1>
         <form>
           <input
             className="search-input"
@@ -37,7 +41,18 @@ const Home = () => {
         </form>
       </div>
 
-      <div className="home-items">{error && <p>{error}</p>}</div>
+      <div className="home-items">
+        {error && <p>{error}</p>}
+        {searchTerm ? (
+          filteredData.map((oneItem) => (
+            <div key={oneItem.id}>
+                <p>{oneItem.item.toLowerCase()}</p>
+            </div>
+          ))
+        ) : (
+          <p>Nenašli sa žiadne položky</p>
+        )}
+      </div>
     </section>
   )
 }
