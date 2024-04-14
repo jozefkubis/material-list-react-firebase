@@ -1,13 +1,14 @@
 import "./Home.css"
 import { projectFirestore } from "../firebase/Config"
 import { useState, useEffect } from "react"
-import { Link } from "react-router-dom"
+// import { Link } from "react-router-dom"
 
 const Home = () => {
   const [data, setData] = useState([])
   const [searchTerm, setSearchTerm] = useState("")
   const [error, setError] = useState("")
 
+  //MARK: get data from firebase
   useEffect(() => {
     return projectFirestore.collection("materialList").onSnapshot(
       (snapshot) => {
@@ -18,10 +19,12 @@ const Home = () => {
     )
   }, [])
 
+  //MARK: handle search
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value)
   }
 
+  //MARK: filter data
   const filteredData = data.filter((oneItem) =>
     oneItem.item.toLowerCase().includes(searchTerm.toLowerCase())
   )
@@ -46,12 +49,13 @@ const Home = () => {
         {searchTerm ? (
           filteredData.map((oneItem) => (
             <div key={oneItem.id}>
-                <p>{oneItem.item.toLowerCase()}</p>
+              <p>{oneItem.item.toLowerCase()}</p>
             </div>
           ))
         ) : (
-          <p>Nenašli sa žiadne položky</p>
+          <p>Hladaj položku</p>
         )}
+        {filteredData.length === 0 && <p>Nenašli sa žiadne položky</p>}
       </div>
     </section>
   )

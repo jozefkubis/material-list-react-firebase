@@ -8,6 +8,9 @@ const Navbar = () => {
         <NavLink to="/">
           <p>Domov</p>
         </NavLink>
+        <NavLink to="/selected">
+          <p>Vybrané položky</p>
+        </NavLink>
         <NavLink to="/insert">
           <p>Vlozit polozku</p>
         </NavLink>
