@@ -13,7 +13,6 @@ const App = () => {
         <Route path="selected" element={<SelectedItems />} />
         <Route path="insert" element={<InsertItem />} />
         <Route path="delete" element={<DeleteItem />} />
-        <Route path="*" element={<Home />} />
       </Route>
     </Routes>
   )
