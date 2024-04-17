@@ -1,7 +1,6 @@
 import "./Home.css"
 import { projectFirestore } from "../firebase/Config"
 import { useState, useEffect } from "react"
-import SelectedItems from "./SelectedItems"
 // import { Link } from "react-router-dom"
 
 const Home = () => {
@@ -39,6 +38,11 @@ const Home = () => {
     ])
   }
 
+  //MARK: delete selected data from page
+  const deleteAllFromPage = () => {
+    setSelectedItems([])
+  }
+
   return (
     <div>
       <section className="home-section">
@@ -71,8 +75,16 @@ const Home = () => {
           {filteredData.length === 0 && <p>Nenašli sa žiadne položky</p>}
         </div>
 
-        <SelectedItems selectedItems={selectedItems} />
+        <div className="selected-items">
+          <h1>Vybrane položky</h1>
+          {selectedItems.map((oneItem, index) => (
+            <div key={index}>
+              <p>{oneItem}</p>
+            </div>
+          ))}
+        </div>
       </section>
+      <button onClick={deleteAllFromPage}>Vycisti stranu</button>
     </div>
   )
 }
