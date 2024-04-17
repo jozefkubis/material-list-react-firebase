@@ -26,8 +26,10 @@ const Home = () => {
   }
 
   //MARK: filter data
-  const filteredData = data.filter((oneItem) =>
-    oneItem.item.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredData = data.filter(
+    (oneItem) =>
+      oneItem.item &&
+      oneItem.item.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
   //MARK: send data to selected
