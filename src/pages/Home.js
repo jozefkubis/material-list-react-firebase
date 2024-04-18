@@ -74,7 +74,7 @@ const Home = () => {
           ) : (
             <p>Hladaj položku</p>
           )}
-          {filteredData.length === 0 && <p>Nenašli sa žiadne položky</p>}
+          {/* {filteredData.length === 0 && <p>Nenašli sa žiadne položky</p>} */}
         </div>
 
         <div className="selected-items">
