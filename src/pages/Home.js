@@ -8,6 +8,7 @@ const Home = () => {
   const [searchTerm, setSearchTerm] = useState("")
   const [error, setError] = useState("")
   const [selectedItems, setSelectedItems] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
   //MARK: get data from firebase
   useEffect(() => {
@@ -15,8 +16,12 @@ const Home = () => {
       (snapshot) => {
         setError(snapshot.empty ? "Nenašli sa žiadne položky" : "")
         setData(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })))
+        setIsLoading(false)
       },
-      (err) => setError(err.message)
+      (err) => {
+        setError(err.message)
+        setIsLoading(false) // Nastaví načítanie na false aj v prípade chyby
+      }
     )
   }, [])
 
@@ -62,8 +67,12 @@ const Home = () => {
         </div>
 
         <div className="home-items">
-          {error && <p>{error}</p>}
-          {searchTerm ? (
+          {isLoading ? (
+            <p>Načítava sa...</p> // Zobrazenie indikátora načítania
+          ) : error ? (
+            <p>{error}</p>
+          ) : (
+            searchTerm &&
             filteredData.map((oneItem) => (
               <div key={oneItem.id}>
                 <button onClick={() => sendToSelected(oneItem.item)}>
@@ -71,10 +80,10 @@ const Home = () => {
                 </button>
               </div>
             ))
-          ) : (
-            <p>Hladaj položku</p>
           )}
-          {filteredData.length === 0 && <p>Nenašli sa žiadne položky</p>}
+          {!isLoading && filteredData.length === 0 && !error && (
+            <p>Nenašli sa žiadne položky</p>
+          )}
         </div>
 
         <div className="selected-items">

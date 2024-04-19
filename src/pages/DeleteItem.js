@@ -8,6 +8,7 @@ const DeleteItem = () => {
   const [searchTerm, setSearchTerm] = useState("")
   const [error, setError] = useState("")
   const [showAll, setShowAll] = useState(false)
+  const [isLoading, setIsLoading] = useState(true) // Pridaný stav pre indikátor načítania
 
   //MARK: get data from firebase
   useEffect(() => {
@@ -15,8 +16,12 @@ const DeleteItem = () => {
       (snapshot) => {
         setError(snapshot.empty ? "Nenašli sa žiadne položky" : "")
         setData(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })))
+        setIsLoading(false) // Nastaví načítanie na false po načítaní dát
       },
-      (err) => setError(err.message)
+      (err) => {
+        setError(err.message)
+        setIsLoading(false) // Nastaví načítanie na false aj v prípade chyby
+      }
     )
   }, [])
 
@@ -52,7 +57,7 @@ const DeleteItem = () => {
 
   return (
     <section>
-      <div className="delte-div">
+      <div className="delete-div">
         <h1>Vymaz položku</h1>
         <form>
           <input
@@ -69,8 +74,12 @@ const DeleteItem = () => {
       </div>
 
       <div>
-        {error && <p>{error}</p>}
-        {searchTerm ? (
+        {isLoading ? (
+          <p>Načítava sa...</p> // Zobrazenie indikátora načítania
+        ) : error ? (
+          <p>{error}</p>
+        ) : (
+          searchTerm &&
           filteredData.map((oneItem) => (
             <div key={oneItem.id}>
               {oneItem.item.toLowerCase()}
@@ -82,24 +91,22 @@ const DeleteItem = () => {
               </button>
             </div>
           ))
-        ) : (
-          <p>Hladaj položku</p>
         )}
-
-        {showAll
-          ? allItems.map((oneItem) => (
-              <div key={oneItem.id}>
-                {oneItem.item.toLowerCase()}
-                <button
-                  onClick={() => deleteItem(oneItem.id)}
-                  className="delete-button"
-                >
-                  <IoMdClose />
-                </button>
-              </div>
-            ))
-          : ""}
-          {!showAll && filteredData.length === 0 && <p>Nenašli sa žiadne položky</p>}
+        {!isLoading && !showAll && filteredData.length === 0 && !error && (
+          <p>Nenašli sa žiadne položky</p>
+        )}
+        {showAll &&
+          allItems.map((oneItem) => (
+            <div key={oneItem.id}>
+              {oneItem.item.toLowerCase()}
+              <button
+                onClick={() => deleteItem(oneItem.id)}
+                className="delete-button"
+              >
+                <IoMdClose />
+              </button>
+            </div>
+          ))}
       </div>
     </section>
   )
