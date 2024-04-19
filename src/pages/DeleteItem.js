@@ -25,6 +25,11 @@ const DeleteItem = () => {
     setSearchTerm(e.target.value)
   }
 
+  const handleShowAll = (e) => {
+    e.preventDefault()
+    setShowAll(!showAll)
+  }
+
   //MARK: filter data
   const filteredData = data.filter(
     (oneItem) =>
@@ -42,6 +47,9 @@ const DeleteItem = () => {
     }
   }
 
+  //MARK: show all items
+  const allItems = data.filter((oneItem) => oneItem && oneItem.item)
+
   return (
     <section>
       <div className="delte-div">
@@ -54,7 +62,7 @@ const DeleteItem = () => {
             onChange={handleSearchChange}
           />{" "}
           <br />
-          <button onClick={() => setShowAll(!showAll)}>
+          <button onClick={handleShowAll}>
             {showAll ? "Skryť všetky položky" : "Rozbal všetky položky"}
           </button>
         </form>
@@ -65,7 +73,7 @@ const DeleteItem = () => {
         {searchTerm ? (
           filteredData.map((oneItem) => (
             <div key={oneItem.id}>
-              {oneItem.item.toLowerCase()}{" "}
+              {oneItem.item.toLowerCase()}
               <button
                 onClick={() => deleteItem(oneItem.id)}
                 className="delete-button"
@@ -77,18 +85,21 @@ const DeleteItem = () => {
         ) : (
           <p>Hladaj položku</p>
         )}
-        {showAll &&
-          data.map((oneItem) => (
-            <div key={oneItem.id}>
-              {oneItem.item.toLowerCase()}
-              <button
-                onClick={() => deleteItem(oneItem.id)}
-                className="delete-button"
-              >
-                <IoMdClose />
-              </button>
-            </div>
-          ))}
+
+        {showAll
+          ? allItems.map((oneItem) => (
+              <div key={oneItem.id}>
+                {oneItem.item.toLowerCase()}
+                <button
+                  onClick={() => deleteItem(oneItem.id)}
+                  className="delete-button"
+                >
+                  <IoMdClose />
+                </button>
+              </div>
+            ))
+          : ""}
+          {!showAll && filteredData.length === 0 && <p>Nenašli sa žiadne položky</p>}
       </div>
     </section>
   )
