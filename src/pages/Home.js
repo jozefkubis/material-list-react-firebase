@@ -50,6 +50,7 @@ const Home = () => {
     setSelectedItems([])
   }
 
+  //MARK: return home
   return (
     <div>
       <section className="home-section">
@@ -95,7 +96,7 @@ const Home = () => {
           ))}
         </div>
       </section>
-      <button onClick={deleteAllFromPage}>Vycisti stranu</button>
+      <button className="delete-page-btn" onClick={deleteAllFromPage}>Vycisti stranu</button>
     </div>
   )
 }

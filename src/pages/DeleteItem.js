@@ -55,11 +55,13 @@ const DeleteItem = () => {
   //MARK: show all items
   const allItems = data.filter((oneItem) => oneItem && oneItem.item)
 
+
+  //MARK: return section
   return (
     <section>
       <div className="delete-div">
         <h1>Vymaz položku</h1>
-        <form>
+        <form className="delete-search-form">
           <input
             type="search"
             placeholder="Vyhladavanie"
