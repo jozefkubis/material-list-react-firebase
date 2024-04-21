@@ -1,6 +1,7 @@
 import "./Home.css"
 import { projectFirestore } from "../firebase/Config"
 import { useState, useEffect } from "react"
+import { RiDeleteBin6Line } from "react-icons/ri";
 // import { Link } from "react-router-dom"
 
 const Home = () => {
@@ -69,7 +70,7 @@ const Home = () => {
 
         <div className="home-items">
           {isLoading ? (
-            <p>Načítava sa...</p> // Zobrazenie indikátora načítania
+            <p className="loading-text">Načítava sa...</p> // Zobrazenie indikátora načítania
           ) : error ? (
             <p>{error}</p>
           ) : (
@@ -86,17 +87,23 @@ const Home = () => {
             <p>Nenašli sa žiadne položky</p>
           )}
         </div>
-
+          <div className="selected-delete">
+            <h1 className="selected-h">Vybrane položky</h1>
+            <button className="delete-page-btn" onClick={deleteAllFromPage}>
+            <RiDeleteBin6Line className="delete-icon"/>
+        </button>
+          </div>
+        
         <div className="selected-items">
-          <h1>Vybrane položky</h1>
           {selectedItems.map((oneItem, index) => (
             <div key={index}>
-              <p>{oneItem}</p>
+              <button>{oneItem}</button>
             </div>
           ))}
         </div>
       </section>
-      <button className="delete-page-btn" onClick={deleteAllFromPage}>Vycisti stranu</button>
+      <div className="deletet-btn-div">        
+      </div>
     </div>
   )
 }
