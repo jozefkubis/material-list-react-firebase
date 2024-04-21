@@ -29,6 +29,8 @@ section {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   outline: none;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 18px;
 }
 
 .insert-form button {
@@ -39,4 +41,6 @@ section {
   border-bottom-right-radius: 5px;
   background-color: #333;
   color: #fff;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 18px;
 }

@@ -1,7 +1,7 @@
 import "./Home.css"
 import { projectFirestore } from "../firebase/Config"
 import { useState, useEffect } from "react"
-import { RiDeleteBin6Line } from "react-icons/ri";
+import { RiDeleteBin6Line } from "react-icons/ri"
 // import { Link } from "react-router-dom"
 
 const Home = () => {
@@ -50,6 +50,9 @@ const Home = () => {
   const deleteAllFromPage = () => {
     setSelectedItems([])
   }
+  const hide = () => {
+    document.querySelector(".selected-item-btn").style.display = "none"
+  }
 
   //MARK: return home
   return (
@@ -84,26 +87,24 @@ const Home = () => {
             ))
           )}
           {!isLoading && filteredData.length === 0 && !error && (
-            <p>Nenašli sa žiadne položky</p>
+            <p className="loading-text">Nenašli sa žiadne položky</p>
           )}
         </div>
-          <div className="selected-delete">
-            <h1 className="selected-h">Vybrane položky</h1>
-            <button className="delete-page-btn" onClick={deleteAllFromPage}>
-            <RiDeleteBin6Line className="delete-icon"/>
-        </button>
-          </div>
-        
+        <div className="selected-delete">
+          <h1 className="selected-h">Vybrane položky</h1>
+          <button className="delete-page-btn" onClick={deleteAllFromPage}>
+            <RiDeleteBin6Line className="delete-icon" />
+          </button>
+        </div>
+
         <div className="selected-items">
           {selectedItems.map((oneItem, index) => (
             <div key={index}>
-              <button>{oneItem}</button>
+              <button className="selected-item-btn" onClick={hide}>{oneItem}</button>
             </div>
           ))}
         </div>
       </section>
-      <div className="deletet-btn-div">        
-      </div>
     </div>
   )
 }

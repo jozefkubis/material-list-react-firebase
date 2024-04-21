@@ -34,8 +34,9 @@ h1 {
   padding: 1rem;
   border: 1px solid #ccc;
   border-radius: 5px;
-  margin-bottom: 1rem;
   outline: none;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 18px;
 }
 
 .delete-search-form button {
@@ -47,4 +48,34 @@ h1 {
   color: #fff;
   cursor: pointer;
   margin-bottom: 1rem;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 18px;
 }
+
+.button {
+  margin: 3px;
+  border-radius: 5px;
+  border: 1px solid rgb(208, 200, 200);
+  width: 300px;
+  padding: 5px;
+}
+
+.delete-button {
+  border: none;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: rgb(169, 24, 24);
+}
+
+.div-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+

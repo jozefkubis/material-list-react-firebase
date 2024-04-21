@@ -1,7 +1,8 @@
 import "./DeleteItem.css"
 import { projectFirestore } from "../firebase/Config"
 import { useState, useEffect } from "react"
-import { IoMdClose } from "react-icons/io"
+import { RiDeleteBin6Line } from "react-icons/ri";
+
 
 const DeleteItem = () => {
   const [data, setData] = useState([])
@@ -83,13 +84,13 @@ const DeleteItem = () => {
         ) : (
           searchTerm &&
           filteredData.map((oneItem) => (
-            <div key={oneItem.id}>
-              {oneItem.item.toLowerCase()}
+            <div className="div-item" key={oneItem.id}>
+              <button className="button">{oneItem.item.toLowerCase()}</button>
               <button
                 onClick={() => deleteItem(oneItem.id)}
                 className="delete-button"
               >
-                <IoMdClose />
+                <RiDeleteBin6Line className="delete-icon"/>
               </button>
             </div>
           ))
@@ -99,13 +100,13 @@ const DeleteItem = () => {
         )}
         {showAll &&
           allItems.map((oneItem) => (
-            <div key={oneItem.id}>
-              {oneItem.item.toLowerCase()}
+            <div className="div-item" key={oneItem.id}>
+              <button className="button">{oneItem.item.toLowerCase()}</button>
               <button
                 onClick={() => deleteItem(oneItem.id)}
                 className="delete-button"
               >
-                <IoMdClose />
+                <RiDeleteBin6Line className="delete-icon"/>
               </button>
             </div>
           ))}
