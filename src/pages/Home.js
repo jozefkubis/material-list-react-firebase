@@ -2,7 +2,6 @@ import "./Home.css"
 import { projectFirestore } from "../firebase/Config"
 import { useState, useEffect } from "react"
 import { RiDeleteBin6Line } from "react-icons/ri"
-// import { Link } from "react-router-dom"
 
 const Home = () => {
   const [data, setData] = useState([])
