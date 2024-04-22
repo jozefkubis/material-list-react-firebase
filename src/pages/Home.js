@@ -27,9 +27,8 @@ const Home = () => {
   }, [])
 
   //MARK: handle search
-  const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value)
-  }
+  const handleSearchChange = (e) => setSearchTerm(e.target.value);
+
 
   //MARK: filter data
   const filteredData = data.filter(
@@ -50,8 +49,19 @@ const Home = () => {
   const deleteAllFromPage = () => {
     setSelectedItems([])
   }
-  const hide = () => {
-    document.querySelector(".selected-item-btn").style.display = "none"
+
+  //MARK: delete item from page
+  /**
+   * This function is called when the user clicks the delete all button.
+   * It sets the display of the element that called it to "none"
+   * 
+   * @param {event} e The event that triggered this function call
+   */
+  const hide = (e) => {
+    // Get the element that triggered this function call
+    const element = e.currentTarget
+    // Set the display of that element to "none" 
+    element.style.display = "none"
   }
 
   //MARK: return home
@@ -99,8 +109,8 @@ const Home = () => {
 
         <div className="selected-items">
           {selectedItems.map((oneItem, index) => (
-            <div key={index}>
-              <button className="selected-item-btn" onClick={hide}>{oneItem}</button>
+            <div key={index} onClick={(e) => hide(e)} className="selected-item-div">
+              <button className="selected-item-btn">{oneItem}</button>
             </div>
           ))}
         </div>
@@ -110,3 +120,5 @@ const Home = () => {
 }
 
 export default Home
+
+

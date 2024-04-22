@@ -31,6 +31,7 @@ const DeleteItem = () => {
     setSearchTerm(e.target.value)
   }
 
+  //MARK: handle show all
   const handleShowAll = (e) => {
     e.preventDefault()
     setShowAll(!showAll)
