@@ -1,40 +1,49 @@
 import "./DeleteItem.css"
 import { projectFirestore } from "../firebase/Config"
-import { useState, useEffect } from "react"
-import { RiDeleteBin6Line } from "react-icons/ri";
-
+import { useEffect } from "react"
+import { RiDeleteBin6Line } from "react-icons/ri"
+import { usePagesContext } from "../contexts/PagesContext"
 
 const DeleteItem = () => {
-  const [data, setData] = useState([])
-  const [searchTerm, setSearchTerm] = useState("")
-  const [error, setError] = useState("")
-  const [showAll, setShowAll] = useState(false)
-  const [isLoading, setIsLoading] = useState(true) // Pridaný stav pre indikátor načítania
+  const { data, searchTerm, error, showAll, isLoading, dispatch } =
+    usePagesContext()
+
+  //   const [data, setData] = useState([])
+  //   const [searchTerm, setSearchTerm] = useState("")
+  //   const [error, setError] = useState("")
+  //   const [showAll, setShowAll] = useState(false)
+  //   const [isLoading, setIsLoading] = useState(true) // Pridaný stav pre indikátor načítania
 
   //MARK: get data from firebase
   useEffect(() => {
     return projectFirestore.collection("materialList").onSnapshot(
       (snapshot) => {
-        setError(snapshot.empty ? "Nenašli sa žiadne položky" : "")
-        setData(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })))
-        setIsLoading(false) // Nastaví načítanie na false po načítaní dát
+        dispatch({
+          type: "setError",
+          payload: snapshot.empty ? "Nenašli sa žiadne položky" : "",
+        })
+        dispatch({
+          type: "setData",
+          payload: snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })),
+        })
+        dispatch({ type: "setIsLoading", payload: false })
       },
       (err) => {
-        setError(err.message)
-        setIsLoading(false) // Nastaví načítanie na false aj v prípade chyby
+        dispatch({ type: "setError", payload: err.message })
+        dispatch({ type: "setIsLoading", payload: false })
       }
     )
-  }, [])
+  }, [dispatch])
 
   //MARK: handle search
   const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value)
+    dispatch({ type: "setSearchTerm", payload: e.target.value })
   }
 
   //MARK: handle show all
   const handleShowAll = (e) => {
     e.preventDefault()
-    setShowAll(!showAll)
+    dispatch({ type: "setShowAll", payload: !showAll })
   }
 
   //MARK: filter data
@@ -48,15 +57,17 @@ const DeleteItem = () => {
   const deleteItem = async (id) => {
     try {
       await projectFirestore.collection("materialList").doc(id).delete()
-      setData(data.filter((oneItem) => oneItem.id !== id))
+      dispatch({
+        type: "setData",
+        payload: data.filter((oneItem) => oneItem.id !== id),
+      })
     } catch (error) {
-      setError("Chyba pri odstraňovaní položky: " + error.message)
+      dispatch({ type: "setError", payload: error.message })
     }
   }
 
   //MARK: show all items
   const allItems = data.filter((oneItem) => oneItem && oneItem.item)
-
 
   //MARK: return section
   return (
@@ -91,7 +102,7 @@ const DeleteItem = () => {
                 onClick={() => deleteItem(oneItem.id)}
                 className="delete-button"
               >
-                <RiDeleteBin6Line className="delete-icon"/>
+                <RiDeleteBin6Line className="delete-icon" />
               </button>
             </div>
           ))
@@ -107,7 +118,7 @@ const DeleteItem = () => {
                 onClick={() => deleteItem(oneItem.id)}
                 className="delete-button"
               >
-                <RiDeleteBin6Line className="delete-icon"/>
+                <RiDeleteBin6Line className="delete-icon" />
               </button>
             </div>
           ))}
