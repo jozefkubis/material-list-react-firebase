@@ -27,6 +27,8 @@ const reducer = (state, action) => {
       return { ...state, isLoading: action.payload }
     case "setInsertItem":
       return { ...state, insertItem: action.payload }
+    case "setShowAll":
+      return { ...state, showAll: action.payload }
     default:
       throw new Error("Unknown action")
   }
