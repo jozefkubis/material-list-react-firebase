@@ -5,14 +5,15 @@ import { RiDeleteBin6Line } from "react-icons/ri"
 import { usePagesContext } from "../contexts/PagesContext"
 
 const DeleteItem = () => {
-  const { data, searchTerm, error, showAll, isLoading, dispatch } =
-    usePagesContext()
-
-  //   const [data, setData] = useState([])
-  //   const [searchTerm, setSearchTerm] = useState("")
-  //   const [error, setError] = useState("")
-  //   const [showAll, setShowAll] = useState(false)
-  //   const [isLoading, setIsLoading] = useState(true) // Pridaný stav pre indikátor načítania
+  const {
+    data,
+    searchTerm,
+    error,
+    showAll,
+    isLoading,
+    dispatch,
+    filteredData,
+  } = usePagesContext()
 
   //MARK: get data from firebase
   useEffect(() => {
@@ -45,13 +46,6 @@ const DeleteItem = () => {
     e.preventDefault()
     dispatch({ type: "setShowAll", payload: !showAll })
   }
-
-  //MARK: filter data
-  const filteredData = data.filter(
-    (oneItem) =>
-      oneItem.item &&
-      oneItem.item.toLowerCase().includes(searchTerm.toLowerCase())
-  )
 
   //MARK: delete item from firebase
   const deleteItem = async (id) => {
