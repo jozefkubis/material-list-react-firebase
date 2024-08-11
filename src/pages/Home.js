@@ -44,7 +44,7 @@ const Home = () => {
             filteredData.map((oneItem) => (
               <div key={oneItem.id}>
                 <button onClick={() => sendToSelected(oneItem.item)}>
-                  {oneItem.item.toLowerCase()}
+                  {oneItem.item}
                 </button>
               </div>
             ))
@@ -67,7 +67,9 @@ const Home = () => {
               onClick={(e) => hide(e)}
               className="selected-item-div"
             >
-              <button className="selected-item-btn">{oneItem}</button>
+              <button className="selected-item-btn">
+                {oneItem.toLowerCase()}
+              </button>
             </div>
           ))}
         </div>

@@ -74,10 +74,14 @@ function PagesProvider({ children }) {
 
   //MARK: send data to selected
   const sendToSelected = (item) => {
-    dispatch({
-      type: "setSelectedItems",
-      payload: [...selectedItems, item.toLowerCase()],
-    })
+    if (!selectedItems.includes(item)) {
+      dispatch({
+        type: "setSelectedItems",
+        payload: [...selectedItems, item],
+      })
+    } else {
+      console.log(`${item} už bol pridaný.`)
+    }
   }
 
   //MARK: delete selected data from page
